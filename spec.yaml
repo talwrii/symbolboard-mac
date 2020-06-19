@@ -1,0 +1,112 @@
+keys:
+  q:
+    movement: "equal_sign"
+    symbols: "6"
+  w:
+    symbols: "7"
+    movement: "underscore"
+  e:
+    symbols: "8"
+  r:
+    symbols: "9"
+    movement: exclamation
+  t:
+    symbols: "0"
+    movement: at
+
+  k:
+    movement: hyphen
+
+  x:
+    movement: percent
+
+  n:
+    movement: hash
+    symbols: ampersand
+
+  c:
+    movement: open_paren
+    symbols: plus
+  v:
+    movement: close_paren
+    symbols: dollar
+
+  hyphen:
+    remap: right_control
+
+  a:
+    movement: "home"
+    symbols: "1"
+  s:
+    symbols: "2"
+    movement: "slash"
+  d:
+    symbols: "3"
+  f:
+    symbols: "4"
+    movement: "bar"
+  g:
+    symbols: "5"
+    movement: "escape"
+  h:
+    movement: "delete_or_backspace"
+  j:
+    movement: "return_or_enter"
+  i:
+    movement: "up_arrow"
+  o:
+    movement: down_arrow
+  m:
+    movement: open_bracket
+
+  spacebar:
+    movement: double_quote
+    shift: quote
+
+  semicolon:
+    movement: tab
+
+  comma:
+    movement: close_bracket
+
+  u:
+    movement: left_arrow
+
+  p:
+    movement: right_arrow
+
+  "7":
+    remap: "right_shift"
+  "4":
+    remap: "left_shift"
+
+  "3":
+    remap: "left_option"
+  "8":
+    remap: "right_option"
+
+  "2":
+    remap: "left_command"
+  "9":
+    remap: "right_command"
+
+  "1":
+    remap: "left_control"
+  "9":
+    remap: "right_control"
+  equal_sign:
+    remap: "left_control"
+  y:
+    movement: asterisk
+  z:
+    movement: caret
+
+
+modifiers:
+  tab: movement
+  open_bracket: movement
+  "5": movement
+  "6": movement
+
+  caps_lock: symbols
+  quote: symbols

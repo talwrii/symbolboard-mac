@@ -71,9 +71,21 @@ keys:
 
   u:
     movement: left_arrow
-
   p:
     movement: right_arrow
+
+
+  y:
+    movement: asterisk
+  z:
+    movement: caret
+
+  period:
+    movement: open_brace
+
+  slash:
+    movement: close_brace
+
 
   "7":
     remap: "right_shift"
@@ -92,15 +104,8 @@ keys:
 
   "1":
     remap: "left_control"
-  "9":
-    remap: "right_control"
   equal_sign:
     remap: "left_control"
-  y:
-    movement: asterisk
-  z:
-    movement: caret
-
 
 modifiers:
   tab: movement

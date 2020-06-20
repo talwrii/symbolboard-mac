@@ -94,6 +94,8 @@ EXTRA_KEYS = {
     "exclamation": ["1", ["left_shift"]],
     "at": ["2", ["left_shift"]],
     "dollar": ["4", ["left_shift"]],
+    "open_brace": ["open_bracket", ["left_shift"]],
+    "close_brace": ["close_bracket", ["left_shift"]],
 }
 
 

@@ -52,11 +52,13 @@ def main() -> None:
             raise Exception("Key is not supported")
         for modifier, out in mappings.items():
             if modifier == "remap":
-                translations.append(create_key_trans(key, out))
+                translations.append(create_translation(key, out))
+            elif modifier == "remap_complex":
+                rules.extend(create_complex_mapping(key, out, None))
             else:
                 if modifier not in modifiers:
                     raise ValueError(modifier)
-                rules.extend(create_keycode(key, out, modifier))
+                rules.extend(create_complex_mapping(key, out, modifier))
 
     result = create_config(translations, rules)
 
@@ -66,8 +68,8 @@ def main() -> None:
             stream.write(json.dumps(result, indent=True))
 
 
-def create_key_trans(from_key: str, to_key: str) -> dict:
-    return {"from": {"key_code": from_key}, "to": {"key_code": to_key}}
+def create_translation(from_key: str, to_key: str) -> dict:
+    return {"from": {"key_code": from_key}, "to": create_target(to_key)}
 
 
 def create_modifier(key, modifier):
@@ -77,6 +79,27 @@ def create_modifier(key, modifier):
         "to": [{"set_variable": {"name": modifier, "value": 1}}],
         "to_after_key_up": [{"set_variable": {"name": modifier, "value": 0}}],
     }
+
+
+def create_complex_mapping(key, output, modifier=None):
+    modifier_string = modifier + " " if modifier else ""
+    result = {
+        "type": "basic",
+        "description": f"{modifier_string}{key} -> {output}",
+        "from": {"key_code": key, "modifiers": {"mandatory": [], "optional": ["any"]},},
+        "to": [create_target(output)],
+    }
+
+    if modifier in BUILTIN_MODIFIERS:
+        for mod_key in BUILTIN_MODIFIERS[modifier]:
+            mod_result = result.copy()
+            mod_result["from"]["modifiers"]["mandatory"] = [mod_key]
+            yield mod_result
+    elif modifier:
+        result["conditions"] = [{"type": "variable_if", "name": modifier, "value": 1}]
+        yield result
+    else:
+        yield result
 
 
 EXTRA_KEYS = {
@@ -96,11 +119,9 @@ EXTRA_KEYS = {
     "dollar": ["4", ["left_shift"]],
     "open_brace": ["open_bracket", ["left_shift"]],
     "close_brace": ["close_bracket", ["left_shift"]],
+    "tilde": ["non_us_backslash", ["left_shift"]],
+    "backtick": ["non_us_backslash", []],
 }
-
-
-def get_key(output):
-    return EXTRA_KEYS.get(output, [output, []])
 
 
 BUILTIN_MODIFIERS = dict(
@@ -110,26 +131,9 @@ BUILTIN_MODIFIERS = dict(
 )
 
 
-def create_keycode(key, output, modifier=None):
-    output_key, output_modifiers = get_key(output)
-    modifier_string = modifier + " " if modifier else ""
-    result = {
-        "type": "basic",
-        "description": f"{modifier_string}{key} -> {output}",
-        "from": {"key_code": key, "modifiers": {"mandatory": [], "optional": ["any"]},},
-        "to": [{"key_code": output_key, "modifiers": output_modifiers}],
-    }
-
-    if modifier in BUILTIN_MODIFIERS:
-        for mod_key in BUILTIN_MODIFIERS[modifier]:
-            mod_result = result.copy()
-            mod_result["from"]["modifiers"]["mandatory"] = [mod_key]
-            yield mod_result
-    elif modifier:
-        result["conditions"] = [{"type": "variable_if", "name": modifier, "value": 1}]
-        yield result
-    else:
-        yield result
+def create_target(output):
+    output_key, output_modifiers = EXTRA_KEYS.get(output, [output, []])
+    return {"key_code": output_key, "modifiers": output_modifiers}
 
 
 def create_config(translations: list, complex_rules: list) -> dict:

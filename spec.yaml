@@ -17,6 +17,9 @@ keys:
   k:
     movement: hyphen
 
+  l:
+    movement: backslash
+
   x:
     movement: percent
 
@@ -80,10 +83,15 @@ keys:
   z:
     movement: caret
 
+  b:
+    movement: backtick
+
+
   period:
     movement: open_brace
 
   slash:
+    symbols: tilde
     movement: close_brace
 
 

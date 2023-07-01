@@ -12,7 +12,7 @@ PARSER = argparse.ArgumentParser(
 
 PARSER.add_argument("file", type=str)
 PARSER.add_argument(
-    "--install",
+    "--install-replace",
     action="store_true",
     default=False,
     help="Install to karibiner directory",
@@ -63,10 +63,9 @@ def main() -> None:
     result = create_config(translations, rules)
 
     print(json.dumps(result, indent=True))
-    if args.install:
+    if args.install_replace:
         with open(CONFIG_PATH, "w") as stream:
             stream.write(json.dumps(result, indent=True))
-
 
 def create_translation(from_key: str, to_key: str) -> dict:
     return {"from": {"key_code": from_key}, "to": create_target(to_key)}

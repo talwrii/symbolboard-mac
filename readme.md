@@ -15,5 +15,5 @@ This keyboard layout runs on top of [karabiner](https://karabiner-elements.pqrs.
 - Clone this repository
 - Install python requirements with `pip3 install -r requirements.txt`
 - Run `python3 compile.py --install-replace spec.yaml` to install the keyboard layout (this will overwrite the karabiner configuration)
-- Alternatively merge the output of `python3 compule.py spec.yaml` into your karabiner file
+- Alternatively merge the output of `python3 compule.py spec.yaml` into your karabiner file. (Default output is in output.json)
 
